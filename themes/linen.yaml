@@ -1,0 +1,60 @@
+# Linen — warm editorial light theme for Home Assistant
+# Drop this file into <config>/themes/ and add to configuration.yaml:
+#   frontend:
+#     themes: !include_dir_merge_named themes
+
+linen:
+  modes:
+    light:
+      # ──────────── Brand ────────────
+      primary-color: "var(--ha-accent, #C2410C)"
+      accent-color: "var(--ha-accent, #C2410C)"
+      app-header-background-color: "#F5F1EA"
+      app-header-text-color: "#1A1714"
+
+      # ──────────── Surfaces ────────────
+      primary-background-color: "#F5F1EA"
+      secondary-background-color: "#EBE5DA"
+      card-background-color: "#FFFFFF"
+      ha-card-background: "#FFFFFF"
+      ha-card-border-radius: "14px"
+      ha-card-border-width: "1px"
+      ha-card-border-color: "rgba(26, 23, 20, 0.08)"
+      ha-card-box-shadow: "0 1px 0 rgba(255,255,255,0.85) inset, 0 -1px 0 rgba(26,23,20,0.04) inset, 0 8px 24px -16px rgba(26,23,20,0.18)"
+      ha-card-background-image: "linear-gradient(180deg, rgba(255,255,255,0.6) 0%, transparent 35%)"
+
+      divider-color: "rgba(26, 23, 20, 0.08)"
+      table-row-background-color: "#FFFFFF"
+      table-row-alternative-background-color: "#FAF7F1"
+
+      # ──────────── Text ────────────
+      primary-text-color: "#1A1714"
+      secondary-text-color: "#6B635A"
+      text-primary-color: "#FFFFFF"
+      disabled-text-color: "#A89E91"
+
+      # ──────────── Sidebar ────────────
+      sidebar-background-color: "#1A1714"
+      sidebar-text-color: "#A89E91"
+      sidebar-icon-color: "#A89E91"
+      sidebar-selected-background-color: "rgba(255, 255, 255, 0.08)"
+      sidebar-selected-text-color: "#F5F1EA"
+      sidebar-selected-icon-color: "var(--ha-accent, #C2410C)"
+
+      # ──────────── Inputs ────────────
+      paper-item-icon-color: "#6B635A"
+      paper-item-icon-active-color: "var(--ha-accent, #C2410C)"
+      switch-checked-color: "var(--ha-accent, #C2410C)"
+      switch-unchecked-color: "#D6CDBF"
+      slider-color: "var(--ha-accent, #C2410C)"
+
+      # ──────────── State colors ────────────
+      state-light-active-color: "#E8A33D"
+      state-switch-active-color: "var(--ha-accent, #C2410C)"
+      state-climate-heat-color: "#C2410C"
+      state-climate-cool-color: "#3A7CA5"
+      state-media_player-active-color: "var(--ha-accent, #C2410C)"
+
+      # ──────────── Type ────────────
+      primary-font-family: "'Söhne', 'Inter', -apple-system, system-ui, sans-serif"
+      paper-font-common-base_-_font-family: "'Söhne', 'Inter', sans-serif"

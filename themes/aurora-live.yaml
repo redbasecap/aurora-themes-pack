@@ -1,0 +1,102 @@
+# Aurora Live — reads colors and background style from input_text / input_select helpers.
+# Change values in the Customizer card → next dashboard load picks them up.
+# Requires the helpers from helpers/customizer.yaml installed in configuration.yaml.
+
+aurora_live:
+  modes:
+    dark:
+      # ──────────── Brand (live from helper) ────────────
+      primary-color: "{{ states('input_text.theme_accent_aurora') }}"
+      accent-color: "{{ states('input_text.theme_accent_aurora') }}"
+      app-header-background-color: "rgba(13, 17, 28, 0.72)"
+      app-header-text-color: "#E6ECF8"
+
+      # ──────────── Surfaces with glossy sheen ────────────
+      primary-background-color: "#0A0E18"
+      secondary-background-color: "#0F1422"
+      card-background-color: "rgba(22, 28, 44, 0.66)"
+      ha-card-background: "rgba(22, 28, 44, 0.66)"
+      ha-card-border-radius: >-
+        {% set r = states('input_select.theme_corner_radius') %}
+        {% if r == 'sharp' %}4px
+        {% elif r == 'pillow' %}24px
+        {% else %}14px{% endif %}
+      ha-card-border-width: "1px"
+      ha-card-border-color: "rgba(255,255,255,0.06)"
+      ha-card-box-shadow: >-
+        0 1px 0 rgba(255,255,255,{{ {'none':0,'soft':0.06,'medium':0.14,'high':0.22}.get(states('input_select.theme_gloss'),0.14) }}) inset,
+        0 -1px 0 rgba(0,0,0,0.25) inset,
+        0 24px 48px -24px rgba(0,0,0,{{ 0.55 * (states('input_number.theme_glow_intensity') | float(60) / 100) }})
+      ha-card-backdrop-filter: "blur(24px) saturate(140%)"
+      ha-card-background-image: >-
+        linear-gradient(180deg, rgba(255,255,255,{{ {'none':0,'soft':0.04,'medium':0.10,'high':0.18}.get(states('input_select.theme_gloss'),0.10) }}) 0%, transparent 35%),
+        linear-gradient(135deg, rgba(255,255,255,{{ {'none':0,'soft':0.02,'medium':0.06,'high':0.12}.get(states('input_select.theme_gloss'),0.06) }}) 0%, transparent 40%)
+
+      divider-color: "rgba(255,255,255,0.06)"
+      primary-text-color: "#E6ECF8"
+      secondary-text-color: "#8A93AB"
+      text-primary-color: "#0A0E18"
+      disabled-text-color: "#4A5267"
+
+      sidebar-background-color: "#070A12"
+      sidebar-text-color: "#8A93AB"
+      sidebar-icon-color: "#8A93AB"
+      sidebar-selected-background-color: >-
+        {{ states('input_text.theme_accent_aurora') }}1A
+      sidebar-selected-text-color: "{{ states('input_text.theme_accent_aurora') }}"
+      sidebar-selected-icon-color: "{{ states('input_text.theme_accent_aurora') }}"
+
+      paper-item-icon-active-color: "{{ states('input_text.theme_accent_aurora') }}"
+      switch-checked-color: "{{ states('input_text.theme_accent_aurora') }}"
+      slider-color: "{{ states('input_text.theme_accent_aurora') }}"
+      state-light-active-color: "#FFD580"
+      state-switch-active-color: "{{ states('input_text.theme_accent_aurora') }}"
+
+      primary-font-family: "'Inter', -apple-system, system-ui, sans-serif"
+
+      # ──────────── Cinematic background — body-level ────────────
+      lovelace-background: >-
+        {% set s = states('input_select.theme_background_style') %}
+        {% set a = states('input_text.theme_accent_aurora') %}
+        {% set b = states('input_text.theme_accent_secondary') %}
+        {% set c = states('input_text.theme_accent_tertiary') %}
+        {% if s == 'orbs' %}
+          radial-gradient(60% 80% at 10% 0%, {{a}}66, transparent 60%),
+          radial-gradient(70% 90% at 90% 100%, {{b}}55, transparent 60%),
+          radial-gradient(50% 60% at 50% 50%, {{c}}44, transparent 55%),
+          #0A0E18
+        {% elif s == 'aurora' %}
+          radial-gradient(60% 30% at 30% 35%, {{a}}88, transparent 50%),
+          radial-gradient(70% 25% at 65% 60%, {{b}}77, transparent 55%),
+          radial-gradient(50% 35% at 50% 80%, {{c}}66, transparent 50%),
+          #0A0E18
+        {% elif s == 'mesh' %}
+          radial-gradient(at 18% 22%, {{a}}99, transparent 45%),
+          radial-gradient(at 82% 12%, {{b}}88, transparent 45%),
+          radial-gradient(at 12% 88%, {{c}}88, transparent 45%),
+          radial-gradient(at 88% 78%, {{a}}77, transparent 45%),
+          #0A0E18
+        {% elif s == 'cyber' %}
+          radial-gradient(70% 70% at 50% 50%, {{a}}55, transparent 60%),
+          linear-gradient(180deg, #04060C 0%, #0A0E18 100%)
+        {% elif s == 'cosmos' %}
+          radial-gradient(70% 50% at 30% 40%, {{a}}77, transparent 55%),
+          radial-gradient(60% 40% at 75% 70%, {{b}}66, transparent 55%),
+          #04060C
+        {% elif s == 'waves' %}
+          radial-gradient(100% 40% at 50% 100%, {{a}}99, transparent 65%),
+          radial-gradient(80% 30% at 30% 90%, {{b}}77, transparent 60%),
+          radial-gradient(80% 30% at 70% 95%, {{c}}77, transparent 60%),
+          #0A0E18
+        {% elif s == 'dunes' %}
+          linear-gradient(165deg, {{a}}88 0%, transparent 30%, {{b}}77 55%, transparent 75%, {{c}}88 100%),
+          #0A0E18
+        {% elif s == 'bokeh' %}
+          radial-gradient(80px at 15% 25%, {{a}}, transparent 60%),
+          radial-gradient(50px at 85% 15%, {{b}}, transparent 60%),
+          radial-gradient(100px at 75% 75%, {{c}}, transparent 60%),
+          radial-gradient(60px at 25% 80%, {{a}}99, transparent 60%),
+          #0A0E18
+        {% else %}
+          #0A0E18
+        {% endif %}

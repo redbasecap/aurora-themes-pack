@@ -1,0 +1,60 @@
+# Obsidian — true-black OLED theme with neon accent
+# Drop this file into <config>/themes/ and add to configuration.yaml:
+#   frontend:
+#     themes: !include_dir_merge_named themes
+
+obsidian:
+  modes:
+    dark:
+      # ──────────── Brand ────────────
+      primary-color: "var(--ha-accent, #00F5A0)"
+      accent-color: "var(--ha-accent, #00F5A0)"
+      app-header-background-color: "#000000"
+      app-header-text-color: "#FFFFFF"
+
+      # ──────────── Surfaces ────────────
+      primary-background-color: "#000000"
+      secondary-background-color: "#0A0A0A"
+      card-background-color: "#0A0A0A"
+      ha-card-background: "#0A0A0A"
+      ha-card-border-radius: "4px"
+      ha-card-border-width: "1px"
+      ha-card-border-color: "#1A1A1A"
+      ha-card-box-shadow: "0 1px 0 rgba(255,255,255,0.06) inset"
+      ha-card-background-image: "linear-gradient(180deg, rgba(255,255,255,0.04) 0%, transparent 50%)"
+
+      divider-color: "#1A1A1A"
+      table-row-background-color: "#0A0A0A"
+      table-row-alternative-background-color: "#111111"
+
+      # ──────────── Text ────────────
+      primary-text-color: "#FFFFFF"
+      secondary-text-color: "#737373"
+      text-primary-color: "#000000"
+      disabled-text-color: "#404040"
+
+      # ──────────── Sidebar ────────────
+      sidebar-background-color: "#000000"
+      sidebar-text-color: "#737373"
+      sidebar-icon-color: "#737373"
+      sidebar-selected-background-color: "#0A0A0A"
+      sidebar-selected-text-color: "var(--ha-accent, #00F5A0)"
+      sidebar-selected-icon-color: "var(--ha-accent, #00F5A0)"
+
+      # ──────────── Inputs ────────────
+      paper-item-icon-color: "#737373"
+      paper-item-icon-active-color: "var(--ha-accent, #00F5A0)"
+      switch-checked-color: "var(--ha-accent, #00F5A0)"
+      switch-unchecked-color: "#262626"
+      slider-color: "var(--ha-accent, #00F5A0)"
+
+      # ──────────── State colors ────────────
+      state-light-active-color: "var(--ha-accent, #00F5A0)"
+      state-switch-active-color: "var(--ha-accent, #00F5A0)"
+      state-climate-heat-color: "#FF3366"
+      state-climate-cool-color: "#00B4FF"
+      state-media_player-active-color: "var(--ha-accent, #00F5A0)"
+
+      # ──────────── Type ────────────
+      primary-font-family: "'JetBrains Mono', 'IBM Plex Mono', ui-monospace, monospace"
+      paper-font-common-base_-_font-family: "'JetBrains Mono', ui-monospace, monospace"

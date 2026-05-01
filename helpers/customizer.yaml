@@ -1,0 +1,157 @@
+# ═══════════════════════════════════════════════════════════════════════
+#  AURORA THEMES PACK — LIVE CUSTOMIZER HELPERS
+#  Paste the sections below into your configuration.yaml once.
+#  After a restart, use the Lovelace card to change everything on the fly.
+# ═══════════════════════════════════════════════════════════════════════
+#
+#  HOW IT WORKS
+#  ────────────
+#  Home Assistant `input_text` / `input_select` / `input_number` helpers
+#  store your theme preferences. The "aurora-live" theme variant reads
+#  those helpers via Jinja templates, so any change you make in the UI
+#  repaints every dashboard instantly — no YAML edits, no restarts.
+#
+#  QUICK SETUP
+#  ───────────
+#  1. Open <config>/configuration.yaml
+#  2. Paste the HELPERS section below (add to existing input_text /
+#     input_select / input_number blocks, or create them if absent).
+#  3. Restart Home Assistant.
+#  4. Pick "Aurora Live" from your profile → Theme.
+#  5. Drop the LOVELACE CARD (bottom of this file) into any dashboard view.
+#
+# ═══════════════════════════════════════════════════════════════════════
+
+# ─────────────────────────────────────────────────────────────────────
+# HELPERS — paste into configuration.yaml
+# ─────────────────────────────────────────────────────────────────────
+
+input_text:
+  theme_accent_aurora:
+    name: "Aurora accent"
+    icon: mdi:palette
+    initial: "#7AA2FF"
+    pattern: "^#[0-9A-Fa-f]{6}$"
+    max: 7
+
+  theme_accent_linen:
+    name: "Linen accent"
+    icon: mdi:palette
+    initial: "#C2410C"
+    pattern: "^#[0-9A-Fa-f]{6}$"
+    max: 7
+
+  theme_accent_obsidian:
+    name: "Obsidian accent"
+    icon: mdi:palette
+    initial: "#00F5A0"
+    pattern: "^#[0-9A-Fa-f]{6}$"
+    max: 7
+
+  theme_accent_secondary:
+    name: "Secondary accent (cinematic)"
+    icon: mdi:palette-swatch
+    initial: "#B794F6"
+    pattern: "^#[0-9A-Fa-f]{6}$"
+    max: 7
+
+  theme_accent_tertiary:
+    name: "Tertiary accent (cinematic)"
+    icon: mdi:palette-swatch
+    initial: "#5EEAD4"
+    pattern: "^#[0-9A-Fa-f]{6}$"
+    max: 7
+
+input_select:
+  theme_background_style:
+    name: "Background style"
+    icon: mdi:image-filter-vintage
+    options:
+      - "off"
+      - "orbs"
+      - "aurora"
+      - "mesh"
+      - "cyber"
+      - "cosmos"
+      - "waves"
+      - "dunes"
+      - "bokeh"
+    initial: "aurora"
+
+  theme_corner_radius:
+    name: "Corner radius"
+    icon: mdi:rounded-corner
+    options:
+      - "sharp"    # 4 px  — Obsidian-style crisp
+      - "soft"     # 14 px — balanced default
+      - "pillow"   # 24 px — Aurora-style pillowy
+    initial: "soft"
+
+  theme_gloss:
+    name: "Card gloss"
+    icon: mdi:water
+    options:
+      - "none"
+      - "soft"
+      - "medium"
+      - "high"
+    initial: "medium"
+
+input_number:
+  theme_glow_intensity:
+    name: "Glow intensity"
+    icon: mdi:weather-sunny
+    min: 0
+    max: 100
+    step: 5
+    initial: 60
+    unit_of_measurement: "%"
+
+  theme_background_opacity:
+    name: "Background intensity"
+    icon: mdi:opacity
+    min: 0
+    max: 100
+    step: 5
+    initial: 65
+    unit_of_measurement: "%"
+
+# ─────────────────────────────────────────────────────────────────────
+# LOVELACE CARD — paste into any dashboard view (raw YAML editor)
+# ─────────────────────────────────────────────────────────────────────
+#
+# type: vertical-stack
+# cards:
+#   - type: markdown
+#     content: |
+#       ## 🎨 Theme Customizer
+#       Tap a field to change it. All changes apply instantly.
+#
+#   - type: entities
+#     title: Accent colors
+#     entities:
+#       - entity: input_text.theme_accent_aurora
+#         name: Aurora
+#       - entity: input_text.theme_accent_linen
+#         name: Linen
+#       - entity: input_text.theme_accent_obsidian
+#         name: Obsidian
+#       - entity: input_text.theme_accent_secondary
+#         name: Secondary (cinematic orbs)
+#       - entity: input_text.theme_accent_tertiary
+#         name: Tertiary (cinematic orbs)
+#
+#   - type: entities
+#     title: Background & feel
+#     entities:
+#       - entity: input_select.theme_background_style
+#       - entity: input_select.theme_corner_radius
+#       - entity: input_select.theme_gloss
+#       - entity: input_number.theme_glow_intensity
+#       - entity: input_number.theme_background_opacity
+#
+# ─────────────────────────────────────────────────────────────────────
+# PRO TIP: pair with a HACS color-picker card for a real swatch UI.
+# Search HACS for "lovelace-color-picker-card" — lets you tap a color
+# wheel instead of typing hex codes.
+# ─────────────────────────────────────────────────────────────────────

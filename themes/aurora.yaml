@@ -1,0 +1,64 @@
+# Aurora — a calm, glassy dark theme for Home Assistant
+# Drop this file into <config>/themes/ and add to configuration.yaml:
+#   frontend:
+#     themes: !include_dir_merge_named themes
+# Then pick "Aurora" from your user profile.
+
+aurora:
+  modes:
+    dark:
+      # ──────────── Brand ────────────
+      primary-color: "var(--ha-accent, #7AA2FF)"
+      accent-color: "var(--ha-accent, #7AA2FF)"
+      app-header-background-color: "rgba(13, 17, 28, 0.72)"
+      app-header-text-color: "#E6ECF8"
+
+      # ──────────── Surfaces ────────────
+      primary-background-color: "#0A0E18"
+      secondary-background-color: "#0F1422"
+      card-background-color: "rgba(22, 28, 44, 0.66)"
+      ha-card-background: "rgba(22, 28, 44, 0.66)"
+      ha-card-border-radius: "20px"
+      ha-card-border-width: "1px"
+      ha-card-border-color: "rgba(255, 255, 255, 0.06)"
+      ha-card-box-shadow: "0 1px 0 rgba(255,255,255,0.14) inset, 0 -1px 0 rgba(0,0,0,0.25) inset, 0 24px 48px -24px rgba(0,0,0,0.55)"
+      ha-card-backdrop-filter: "blur(24px) saturate(140%)"
+      # Glossy sheen — top highlight + diagonal specular wash
+      ha-card-background-image: "linear-gradient(180deg, rgba(255,255,255,0.10) 0%, transparent 35%), linear-gradient(135deg, rgba(255,255,255,0.06) 0%, transparent 40%)"
+
+      divider-color: "rgba(255, 255, 255, 0.06)"
+      table-row-background-color: "#0F1422"
+      table-row-alternative-background-color: "#121829"
+
+      # ──────────── Text ────────────
+      primary-text-color: "#E6ECF8"
+      secondary-text-color: "#8A93AB"
+      text-primary-color: "#0A0E18"
+      disabled-text-color: "#4A5267"
+
+      # ──────────── Sidebar ────────────
+      sidebar-background-color: "#070A12"
+      sidebar-text-color: "#8A93AB"
+      sidebar-icon-color: "#8A93AB"
+      sidebar-selected-background-color: "rgba(122, 162, 255, 0.10)"
+      sidebar-selected-text-color: "var(--ha-accent, #7AA2FF)"
+      sidebar-selected-icon-color: "var(--ha-accent, #7AA2FF)"
+
+      # ──────────── Inputs / switches ────────────
+      paper-item-icon-color: "#8A93AB"
+      paper-item-icon-active-color: "var(--ha-accent, #7AA2FF)"
+      switch-checked-color: "var(--ha-accent, #7AA2FF)"
+      switch-unchecked-color: "#3A4258"
+      slider-color: "var(--ha-accent, #7AA2FF)"
+
+      # ──────────── State colors ────────────
+      state-light-active-color: "#FFD580"
+      state-switch-active-color: "var(--ha-accent, #7AA2FF)"
+      state-climate-heat-color: "#FF8A65"
+      state-climate-cool-color: "#7AC9FF"
+      state-media_player-active-color: "var(--ha-accent, #7AA2FF)"
+      state-binary_sensor-active-color: "#A6F39E"
+
+      # ──────────── Type ────────────
+      primary-font-family: "'Inter', -apple-system, system-ui, sans-serif"
+      paper-font-common-base_-_font-family: "'Inter', sans-serif"
