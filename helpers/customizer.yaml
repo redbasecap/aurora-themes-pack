@@ -11,14 +11,22 @@
 #  those helpers via Jinja templates, so any change you make in the UI
 #  repaints every dashboard instantly — no YAML edits, no restarts.
 #
+#  REQUIREMENTS
+#  ────────────
+#  ⚠️  Install `card-mod` from HACS → Frontend before using this customizer.
+#  The Aurora Live theme uses card-mod to inject the animated @keyframes
+#  CSS that drives the cinematic backgrounds. Without card-mod the colors
+#  still apply but the background stays plain.
+#
 #  QUICK SETUP
 #  ───────────
-#  1. Open <config>/configuration.yaml
-#  2. Paste the HELPERS section below (add to existing input_text /
+#  1. HACS → Frontend → search "card-mod" → Download → restart HA.
+#  2. Open <config>/configuration.yaml
+#  3. Paste the HELPERS section below (add to existing input_text /
 #     input_select / input_number blocks, or create them if absent).
-#  3. Restart Home Assistant.
-#  4. Pick "Aurora Live" from your profile → Theme.
-#  5. Drop the LOVELACE CARD (bottom of this file) into any dashboard view.
+#  4. Restart Home Assistant.
+#  5. Pick "Aurora Live" from your profile → Theme.
+#  6. Drop the LOVELACE CARD (bottom of this file) into any dashboard view.
 #
 # ═══════════════════════════════════════════════════════════════════════
 

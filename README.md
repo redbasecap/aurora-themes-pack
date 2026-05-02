@@ -62,11 +62,14 @@ Restart HA, then Profile → Theme.
 
 The **Aurora Live** theme variant reads accent colors and effects from Home Assistant helpers, so you can change everything from a Lovelace card in real time.
 
+**Required for animated backgrounds:** install [`card-mod`](https://github.com/thomasloven/lovelace-card-mod) from HACS → Frontend. The static themes (`aurora`, `linen`, `obsidian`) work without it; `aurora_live` needs card-mod to inject the `@keyframes` animation onto the page.
+
 **Setup:**
-1. Append the contents of [`helpers/customizer.yaml`](./helpers/customizer.yaml) to your `configuration.yaml`.
-2. Restart Home Assistant once to register the helpers.
-3. Pick **"Aurora Live"** from Profile → Theme.
-4. Paste the Lovelace card YAML from `helpers/customizer.yaml` into any dashboard view.
+1. Install `card-mod` from HACS → Frontend → search "card-mod" → Download.
+2. Append the contents of [`helpers/customizer.yaml`](./helpers/customizer.yaml) to your `configuration.yaml`.
+3. Restart Home Assistant once to register the helpers.
+4. Pick **"Aurora Live"** from Profile → Theme.
+5. Paste the Lovelace card YAML from `helpers/customizer.yaml` into any dashboard view.
 
 From that point on, any change to a helper repaints every device instantly — no restarts, no file edits.
 

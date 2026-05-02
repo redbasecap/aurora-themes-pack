@@ -1,8 +1,17 @@
-# Aurora Live — reads colors and background style from input_text / input_select helpers.
-# Change values in the Customizer card → next dashboard load picks them up.
-# Requires the helpers from helpers/customizer.yaml installed in configuration.yaml.
+# Aurora Live — accent colors and animated backgrounds driven by HA helpers.
+# Change values in the Customizer card → CSS re-renders live, no restarts.
+#
+# REQUIRES:
+#   • Helpers from helpers/customizer.yaml installed in configuration.yaml
+#   • card-mod (HACS → Frontend → "card-mod") for the animated backgrounds.
+#     Without card-mod the colors still apply, you just lose the animation.
 
 aurora_live:
+  # ──────────── card-mod hook ────────────
+  # Tells card-mod this theme owns the styles below. The key MUST equal the
+  # theme name above for card-mod to attach.
+  card-mod-theme: aurora_live
+
   modes:
     dark:
       # ──────────── Brand (live from helper) ────────────
@@ -54,49 +63,114 @@ aurora_live:
 
       primary-font-family: "'Inter', -apple-system, system-ui, sans-serif"
 
-      # ──────────── Cinematic background — body-level ────────────
-      lovelace-background: >-
+      # ══════════════════════════════════════════════════════════════════
+      # CINEMATIC ANIMATED BACKGROUND — injected via card-mod
+      # ══════════════════════════════════════════════════════════════════
+      # card-mod re-renders this CSS whenever the referenced inputs change,
+      # so picking a new background style or accent in the Customizer card
+      # repaints every dashboard instantly.
+      #
+      # We attach a fixed `::before` to `home-assistant-main` so the layer
+      # spans the whole viewport behind any dashboard, sidebar, or panel.
+      # ══════════════════════════════════════════════════════════════════
+      card-mod-root: |
         {% set s = states('input_select.theme_background_style') %}
         {% set a = states('input_text.theme_accent_aurora') %}
         {% set b = states('input_text.theme_accent_secondary') %}
         {% set c = states('input_text.theme_accent_tertiary') %}
-        {% if s == 'orbs' %}
-          radial-gradient(60% 80% at 10% 0%, {{a}}66, transparent 60%),
-          radial-gradient(70% 90% at 90% 100%, {{b}}55, transparent 60%),
-          radial-gradient(50% 60% at 50% 50%, {{c}}44, transparent 55%),
-          #0A0E18
-        {% elif s == 'aurora' %}
-          radial-gradient(60% 30% at 30% 35%, {{a}}88, transparent 50%),
-          radial-gradient(70% 25% at 65% 60%, {{b}}77, transparent 55%),
-          radial-gradient(50% 35% at 50% 80%, {{c}}66, transparent 50%),
-          #0A0E18
-        {% elif s == 'mesh' %}
-          radial-gradient(at 18% 22%, {{a}}99, transparent 45%),
-          radial-gradient(at 82% 12%, {{b}}88, transparent 45%),
-          radial-gradient(at 12% 88%, {{c}}88, transparent 45%),
-          radial-gradient(at 88% 78%, {{a}}77, transparent 45%),
-          #0A0E18
-        {% elif s == 'cyber' %}
-          radial-gradient(70% 70% at 50% 50%, {{a}}55, transparent 60%),
-          linear-gradient(180deg, #04060C 0%, #0A0E18 100%)
-        {% elif s == 'cosmos' %}
-          radial-gradient(70% 50% at 30% 40%, {{a}}77, transparent 55%),
-          radial-gradient(60% 40% at 75% 70%, {{b}}66, transparent 55%),
-          #04060C
-        {% elif s == 'waves' %}
-          radial-gradient(100% 40% at 50% 100%, {{a}}99, transparent 65%),
-          radial-gradient(80% 30% at 30% 90%, {{b}}77, transparent 60%),
-          radial-gradient(80% 30% at 70% 95%, {{c}}77, transparent 60%),
-          #0A0E18
-        {% elif s == 'dunes' %}
-          linear-gradient(165deg, {{a}}88 0%, transparent 30%, {{b}}77 55%, transparent 75%, {{c}}88 100%),
-          #0A0E18
-        {% elif s == 'bokeh' %}
-          radial-gradient(80px at 15% 25%, {{a}}, transparent 60%),
-          radial-gradient(50px at 85% 15%, {{b}}, transparent 60%),
-          radial-gradient(100px at 75% 75%, {{c}}, transparent 60%),
-          radial-gradient(60px at 25% 80%, {{a}}99, transparent 60%),
-          #0A0E18
-        {% else %}
-          #0A0E18
+        {% set opacity = (states('input_number.theme_background_opacity') | float(65)) / 100 %}
+
+        @keyframes atp-aurora { 0% { transform: translate(-5%,-3%) rotate(-3deg) scale(1.1); } 100% { transform: translate(5%,3%) rotate(4deg) scale(1.2); } }
+        @keyframes atp-orbs-a { 0% { transform: translate(0,0) scale(1); } 100% { transform: translate(15%,8%) scale(1.15); } }
+        @keyframes atp-orbs-b { 0% { transform: translate(0,0) scale(1.05); } 100% { transform: translate(-12%,-10%) scale(0.95); } }
+        @keyframes atp-mesh { 0%,100% { transform: scale(1) rotate(0deg); } 50% { transform: scale(1.18) rotate(10deg); } }
+        @keyframes atp-grid { 0% { background-position: 0 0, 0 0; } 100% { background-position: 56px 56px, 56px 56px; } }
+        @keyframes atp-pulse { 0% { opacity: 0.35; transform: scale(0.95); } 100% { opacity: 0.55; transform: scale(1.05); } }
+        @keyframes atp-stars { 0% { transform: translate(0,0); } 100% { transform: translate(-240px,-240px); } }
+        @keyframes atp-waves { 0% { transform: translateY(-3%) scaleX(1); } 100% { transform: translateY(3%) scaleX(1.08); } }
+        @keyframes atp-dunes { 0% { transform: translate(-3%,2%) rotate(-1deg); } 100% { transform: translate(3%,-2%) rotate(2deg); } }
+        @keyframes atp-bokeh { 0% { transform: translate(-2%,-3%) scale(1); } 100% { transform: translate(3%,2%) scale(1.08); } }
+
+        home-assistant-main {
+          isolation: isolate;
+        }
+
+        {% if s != 'off' %}
+        home-assistant-main::before {
+          content: "";
+          position: fixed;
+          inset: -20%;
+          z-index: -1;
+          pointer-events: none;
+          opacity: {{ opacity }};
+          mix-blend-mode: screen;
+          {% if s == 'aurora' %}
+          background:
+            radial-gradient(ellipse 60% 30% at 30% 35%, {{a}} 0%, transparent 50%),
+            radial-gradient(ellipse 70% 25% at 65% 60%, {{b}} 0%, transparent 55%),
+            radial-gradient(ellipse 50% 35% at 50% 80%, {{c}} 0%, transparent 50%);
+          filter: blur(80px) saturate(180%);
+          animation: atp-aurora 30s ease-in-out infinite alternate;
+          {% elif s == 'orbs' %}
+          background:
+            radial-gradient(circle at 20% 20%, {{a}} 0%, transparent 60%),
+            radial-gradient(circle at 80% 80%, {{b}} 0%, transparent 60%),
+            radial-gradient(circle at 50% 50%, {{c}} 0%, transparent 55%);
+          filter: blur(90px) saturate(140%);
+          animation: atp-orbs-a 22s ease-in-out infinite alternate;
+          {% elif s == 'mesh' %}
+          background:
+            radial-gradient(at 18% 22%, {{a}} 0%, transparent 45%),
+            radial-gradient(at 82% 12%, {{b}} 0%, transparent 45%),
+            radial-gradient(at 12% 88%, {{c}} 0%, transparent 45%),
+            radial-gradient(at 88% 78%, {{a}} 0%, transparent 45%);
+          filter: blur(50px) saturate(150%);
+          animation: atp-mesh 28s ease-in-out infinite alternate;
+          {% elif s == 'cyber' %}
+          background:
+            linear-gradient({{a}}30 1px, transparent 1px),
+            linear-gradient(90deg, {{a}}30 1px, transparent 1px);
+          background-size: 56px 56px;
+          mask-image: radial-gradient(ellipse 80% 70% at 50% 50%, black 20%, transparent 85%);
+          -webkit-mask-image: radial-gradient(ellipse 80% 70% at 50% 50%, black 20%, transparent 85%);
+          transform-origin: 50% 100%;
+          transform: perspective(900px) rotateX(55deg) translateY(20%) scale(2);
+          animation: atp-grid 25s linear infinite;
+          {% elif s == 'cosmos' %}
+          background:
+            radial-gradient(2px 2px at 20% 30%, #fff, transparent 60%),
+            radial-gradient(1px 1px at 60% 70%, #fff, transparent 60%),
+            radial-gradient(2px 2px at 80% 20%, {{a}}, transparent 65%),
+            radial-gradient(1px 1px at 35% 85%, #fff, transparent 60%),
+            radial-gradient(2px 2px at 90% 60%, {{b}}, transparent 65%),
+            radial-gradient(1.5px 1.5px at 75% 45%, #fff, transparent 60%),
+            radial-gradient(2px 2px at 50% 15%, {{c}}, transparent 65%),
+            radial-gradient(ellipse 70% 50% at 30% 40%, {{a}} 0%, transparent 55%),
+            radial-gradient(ellipse 60% 40% at 75% 70%, {{b}} 0%, transparent 55%);
+          background-size: 480px 480px, 480px 480px, 480px 480px, 480px 480px, 480px 480px, 480px 480px, 480px 480px, 100% 100%, 100% 100%;
+          animation: atp-stars 80s linear infinite;
+          {% elif s == 'waves' %}
+          background:
+            radial-gradient(ellipse 100% 40% at 50% 100%, {{a}} 0%, transparent 65%),
+            radial-gradient(ellipse 80% 30% at 30% 90%, {{b}} 0%, transparent 60%),
+            radial-gradient(ellipse 80% 30% at 70% 95%, {{c}} 0%, transparent 60%);
+          filter: blur(50px) saturate(140%);
+          animation: atp-waves 14s ease-in-out infinite alternate;
+          {% elif s == 'dunes' %}
+          background:
+            linear-gradient(165deg, {{a}} 0%, transparent 30%, {{b}} 55%, transparent 75%, {{c}} 100%);
+          filter: blur(80px) saturate(130%);
+          animation: atp-dunes 24s ease-in-out infinite alternate;
+          {% elif s == 'bokeh' %}
+          background:
+            radial-gradient(circle 80px at 15% 25%, {{a}} 0%, transparent 60%),
+            radial-gradient(circle 50px at 85% 15%, {{b}} 0%, transparent 60%),
+            radial-gradient(circle 100px at 75% 75%, {{c}} 0%, transparent 60%),
+            radial-gradient(circle 60px at 25% 80%, {{a}} 0%, transparent 60%),
+            radial-gradient(circle 40px at 50% 50%, {{b}} 0%, transparent 60%),
+            radial-gradient(circle 70px at 95% 50%, {{a}} 0%, transparent 60%);
+          filter: blur(20px);
+          animation: atp-bokeh 18s ease-in-out infinite alternate;
+          {% endif %}
+        }
         {% endif %}
