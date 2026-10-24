@@ -18,11 +18,13 @@ Three premium themes — **Aurora** (glassy dark), **Linen** (warm light), and *
 | **Obsidian** | Pure black + neon accents | OLED displays, control rooms |
 | **Aurora Live** | Aurora with live customizer | Any setup where you tweak often |
 
-Each theme ships with:
-- 8 animated backgrounds (Lava orbs, Aurora ribbons, Color mesh, Cyber grid, Deep cosmos, Tidal waves, Silk dunes, Soft bokeh)
+Every theme ships with:
 - Glossy card treatment baked in
-- Card hover lift + accent glow
 - Theme-tuned shadows, sidebar, fonts
+
+**Aurora Live** additionally adds (requires [`card-mod`](https://github.com/thomasloven/lovelace-card-mod)):
+- 8 animated backgrounds (Lava orbs, Aurora ribbons, Color mesh, Cyber grid, Deep cosmos, Tidal waves, Silk dunes, Soft bokeh)
+- Live accent colors, gloss and effects from the customizer helpers
 
 ---
 
