@@ -1,5 +1,7 @@
 # 🌌 Aurora Themes Pack for Home Assistant
 
+[![Buy Me A Coffee](https://img.shields.io/badge/Buy%20Me%20A%20Coffee-support-FFDD00?logo=buymeacoffee&logoColor=black)](https://buymeacoffee.com/redbasecap)
+
 Three premium themes — **Aurora** (glassy dark), **Linen** (warm light), and **Obsidian** (true-black OLED) — with **8 cinematic animated backgrounds** and a **live in-HA customizer** that lets you change accent colors and effects without restarting.
 
 [![hacs_badge](https://img.shields.io/badge/HACS-Custom-orange.svg?style=for-the-badge)](https://github.com/hacs/integration)
